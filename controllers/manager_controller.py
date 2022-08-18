@@ -22,5 +22,5 @@ class Manager:
     def view_tournament(self):
         pass
 
-    def play_tournament(self, tournament: Tournament):
+    def play_tournament(self, tournament:Tournament):
         pass

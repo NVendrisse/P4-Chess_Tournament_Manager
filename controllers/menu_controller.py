@@ -13,10 +13,14 @@ class MainMenu:
                 if selector == "1":
                     play_tournament = 1
                 elif selector == "2":
-                    tournament_management = PlayersMenu()
-                    option_tournament = tournament_management.select(
+                    player_management = PlayersMenu()
+                    option_player = player_management.select(
                         input("Selection : "))
                 elif selector == "3":
+                    tournament_management = TournamentMenu()
+                    option_tournament = tournament_management.select(
+                        input("Selection : "))
+                elif selector == "4":
                     exit()
                 else:
                     print("This option is unavailable, please try again")
@@ -64,7 +68,30 @@ class PlayerCreation:
             answer=input("Y/n : ")
             if answer=="Y" or answer=="y":
                 self.create_new()
+            elif answer=="N" or answer=="n":
+                return_back=PlayersMenu()
+                back_selector=return_back.select(input("Enter your choice : "))
             else:
                 return_back=PlayersMenu()
                 back_selector=return_back.select(input("Enter your choice : "))
 
+
+class TournamentMenu:
+    def __init__(self) -> None:
+        print_tournament_menu=Menus.tournament_menu()
+    
+    def select(self,selector:int):
+        while True:
+            try:
+                if selector == "1":
+                    start_tournament=1
+                elif selector == "2":
+                    create_tournament=2
+                elif selector == "3":
+                    return_back = MainMenu()
+                    main_menu_selector = return_back.select(
+                        input("Enter your choice : "))
+                else:
+                    print("This option is unavailable, please try again")
+            except TypeError:
+                print("You have entered a wrong selector")
