@@ -1,24 +1,24 @@
-
+from modules.coloprint import cprint
 class Menus:
 
     def main_menu():
-        print("Tournois d'échecs")
-        print("1- Jouer un tournoi")
-        print("2- Gestion des joueurs")
-        print("3- Gestion des tournois")
-        print("4- Quitter")
+        cprint("Tournois d'échecs","black","bright_green")
+        cprint("1- Jouer un tournoi")
+        cprint("2- Gestion des joueurs")
+        cprint("3- Gestion des tournois")
+        cprint("4- Quitter")
 
     def players_menu():
-        print("Menu des joueurs")
-        print("1- Créer un nouveau joueur")
-        print("2- Afficher la liste des joueurs")
-        print("3- Retour")
+        cprint("Menu des joueurs","black","bright_green")
+        cprint("1- Créer un nouveau joueur")
+        cprint("2- Afficher la liste des joueurs")
+        cprint("3- Retour")
 
     def tournament_menu():
-        print("Menu des Tournois")
-        print("1- Jouer un tournois")
-        print("2- Créer un tournois")
-        print("3- Retour")
+        cprint("Menu des Tournois","black","bright_green")
+        cprint("1- Jouer un tournois")
+        cprint("2- Créer un tournois")
+        cprint("3- Retour")
 
 
 class PlayersCreationInteract:
@@ -28,3 +28,10 @@ class PlayersCreationInteract:
 
     def ask_new():
         return "Voulez-vous créer un nouveau joueur?\n({}/8 joueurs créés)"
+
+class TournamentCreationInteractive:
+
+    def tournament_creation():
+        cprint("Création d'un nouveau Tournoi","black","yellow")
+
+        

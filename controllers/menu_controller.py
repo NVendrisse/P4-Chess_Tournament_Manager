@@ -1,6 +1,8 @@
+from modules.tournament import Tournament
 from views.menus import *
 from modules.players import Player
 from controllers.manager_controller import Manager
+from controllers.saving_controller import Save
 
 
 class MainMenu:
@@ -52,6 +54,7 @@ class PlayersMenu:
 
 class PlayerCreation:
     def __init__(self, players_list=[]) -> None:
+
         self.players_list = players_list
         print_title = PlayersCreationInteract.player_creation()
 
@@ -61,6 +64,7 @@ class PlayerCreation:
         bdate = input("Date de naissance (jj/mm/aaaa) : ")
         genre = input("Genre (M/F/Nc) : ")
         rank = input("Classement : ")
+        ##Controle des inputs
         new_player = Player(fname, lname, bdate, genre, rank)
         self.players_list.append(new_player)
         if len(self.players_list)<8:
@@ -69,9 +73,12 @@ class PlayerCreation:
             if answer=="Y" or answer=="y":
                 self.create_new()
             elif answer=="N" or answer=="n":
+                player_dict=Manager.serialize_player_list(self.players_list)
+                saving_list=Save.export_(player_dict,"players")
                 return_back=PlayersMenu()
                 back_selector=return_back.select(input("Enter your choice : "))
             else:
+                saving_list=Save.export_(self.players_list,"players")
                 return_back=PlayersMenu()
                 back_selector=return_back.select(input("Enter your choice : "))
 
@@ -95,3 +102,21 @@ class TournamentMenu:
                     print("This option is unavailable, please try again")
             except TypeError:
                 print("You have entered a wrong selector")
+
+class TournamentCreation:
+    def __init__(self) -> None:
+        print_title=TournamentCreationInteractive.tournament_creation()
+
+    def create_new(self):
+        n=input("Nom : ")
+        l=input("Localisation : ")
+        dd=input("Date de début : ")
+        df=input("Date de fin : ")
+        tc=input("Controle de temps : ")
+        rm=input("Nombre de tours (4 par défaut) : ")
+        d=input("Description : ")
+        self.new_tournament=Tournament(n,l,dd,df,tc,d,[],rm,[])
+        
+
+    def add_players_list(self,players_list:list):
+        self.new_tournament.players=players_list

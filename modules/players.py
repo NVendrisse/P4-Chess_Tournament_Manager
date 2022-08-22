@@ -8,5 +8,6 @@ class Player:
         self.genre = genre
         self.rank = rank
 
-    def serialized(self):
+    def serialize(self):
         return {"firstname": self.firstname, "lastname": self.lastname, "birthdate": self.birthdate, "genre": self.genre, "rank": self.rank}
+
