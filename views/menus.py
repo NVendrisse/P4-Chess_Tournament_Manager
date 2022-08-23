@@ -33,5 +33,8 @@ class TournamentCreationInteractive:
 
     def tournament_creation():
         cprint("Création d'un nouveau Tournoi","black","yellow")
+    
+    def tournament_add_player_menu():
+        return "Gestion des joueurs du tournois : {}"
 
         

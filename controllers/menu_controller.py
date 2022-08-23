@@ -78,10 +78,15 @@ class PlayerCreation:
                 return_back=PlayersMenu()
                 back_selector=return_back.select(input("Enter your choice : "))
             else:
+                player_dict=Manager.serialize_player_list(self.players_list)
                 saving_list=Save.export_(self.players_list,"players")
                 return_back=PlayersMenu()
                 back_selector=return_back.select(input("Enter your choice : "))
-
+        else:
+            player_dict=Manager.serialize_player_list(self.players_list)
+            saving_list=Save.export_(self.players_list,"players")
+            return_back=PlayersMenu()
+            back_selector=return_back.select(input("Enter your choice : "))
 
 class TournamentMenu:
     def __init__(self) -> None:
@@ -93,7 +98,8 @@ class TournamentMenu:
                 if selector == "1":
                     start_tournament=1
                 elif selector == "2":
-                    create_tournament=2
+                    create_tournament=TournamentCreation()
+                    new_tournament=create_tournament.create_new()
                 elif selector == "3":
                     return_back = MainMenu()
                     main_menu_selector = return_back.select(
@@ -102,6 +108,7 @@ class TournamentMenu:
                     print("This option is unavailable, please try again")
             except TypeError:
                 print("You have entered a wrong selector")
+                break
 
 class TournamentCreation:
     def __init__(self) -> None:
@@ -115,8 +122,11 @@ class TournamentCreation:
         tc=input("Controle de temps : ")
         rm=input("Nombre de tours (4 par défaut) : ")
         d=input("Description : ")
+        #Controle des inputs
         self.new_tournament=Tournament(n,l,dd,df,tc,d,[],rm,[])
-        
+        print(TournamentCreationInteractive.tournament_add_player_menu().format(n))
+        self.add_players_list(Save.import_("players"))
+        saving_tournament=Save.export_(Manager.serialize_tournament(self.new_tournament))
 
     def add_players_list(self,players_list:list):
         self.new_tournament.players=players_list
