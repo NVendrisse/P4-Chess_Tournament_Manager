@@ -1,3 +1,4 @@
+from multiprocessing import managers
 from modules.tournament import Tournament
 from views.menus import *
 from modules.players import Player
@@ -7,6 +8,7 @@ from controllers.saving_controller import Save
 
 class MainMenu:
     def __init__(self) -> None:
+        Manager.clear_screen()
         print_main = Menus.main_menu()
 
     def select(self, selector: int):
@@ -27,11 +29,12 @@ class MainMenu:
                 else:
                     print("This option is unavailable, please try again")
             except TypeError:
-                print("You have entered a wrong selector")
+                print("0000 You have entered a wrong selector")
 
 
 class PlayersMenu:
     def __init__(self) -> None:
+        Manager.clear_screen()
         print_playermenu = Menus.players_menu()
 
     def select(self, selector: int):
@@ -41,7 +44,9 @@ class PlayersMenu:
                     add_player = PlayerCreation()
                     new_player = add_player.create_new()
                 elif selector == "2":
-                    view_players = 2
+                    view_players = PlayersVisualization(Save.import_("players"))
+                    #testing
+                    pl=view_players.ordered_by_name()
                 elif selector == "3":
                     return_back = MainMenu()
                     main_menu_selector = return_back.select(
@@ -49,12 +54,12 @@ class PlayersMenu:
                 else:
                     print("This option is unavailable, please try again")
             except TypeError:
-                print("You have entered a wrong selector")
+                print("0001 You have entered a wrong selector")
 
 
 class PlayerCreation:
     def __init__(self, players_list=[]) -> None:
-
+        Manager.clear_screen()
         self.players_list = players_list
         print_title = PlayersCreationInteract.player_creation()
 
@@ -88,8 +93,25 @@ class PlayerCreation:
             return_back=PlayersMenu()
             back_selector=return_back.select(input("Enter your choice : "))
 
+class PlayersVisualization:
+    def __init__(self,players:list) -> None:
+        Manager.clear_screen()
+        self.players=players
+    def ordered_by_name(self):
+        players_list=Manager.unserialize_player_dict(self.players)
+        ordered_list=sorted(players_list, key=lambda player: player.lastname,reverse=False)
+        for player_ in ordered_list:
+            print(player_)
+        tamp=input("Press enter to continue...")
+        back_to_menu=PlayersMenu()
+        btm.select=back_to_menu.select(input("Enter your choice :"))
+
+    def ordered_by_rank():
+        pass
+
 class TournamentMenu:
     def __init__(self) -> None:
+        Manager.clear_screen()
         print_tournament_menu=Menus.tournament_menu()
     
     def select(self,selector:int):
@@ -107,11 +129,12 @@ class TournamentMenu:
                 else:
                     print("This option is unavailable, please try again")
             except TypeError:
-                print("You have entered a wrong selector")
+                print("0002 You have entered a wrong selector")
                 break
 
 class TournamentCreation:
     def __init__(self) -> None:
+        Manager.clear_screen()
         print_title=TournamentCreationInteractive.tournament_creation()
 
     def create_new(self):
@@ -126,7 +149,12 @@ class TournamentCreation:
         self.new_tournament=Tournament(n,l,dd,df,tc,d,[],rm,[])
         print(TournamentCreationInteractive.tournament_add_player_menu().format(n))
         self.add_players_list(Save.import_("players"))
-        saving_tournament=Save.export_(Manager.serialize_tournament(self.new_tournament))
+        serialized_tournament=Manager.serialize_tournament(self.new_tournament)
+        print(serialized_tournament)
+        saving_tournament=Save.export_(serialized_tournament,"tournament")#erreur
+        tournament_menu=TournamentMenu()
+        tournament_selection=tournament_menu.select(input("Enter your choice : "))
 
     def add_players_list(self,players_list:list):
         self.new_tournament.players=players_list
+

@@ -1,5 +1,6 @@
 from modules.players import Player
 from modules.tournament import Tournament
+import os
 
 
 class Manager:
@@ -24,3 +25,9 @@ class Manager:
                        "time_control": tournament.time_control, "description": tournament.description, "round_amount": tournament.round_amount, "players": tournament.players}
 
         return return_dict
+
+    def clear_screen():
+        if os.name=="posix":
+            os.system("clear")
+        else:
+            os.system("cls")
