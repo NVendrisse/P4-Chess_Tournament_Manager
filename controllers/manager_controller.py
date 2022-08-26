@@ -16,8 +16,9 @@ class Manager:
     def unserialize_player_dict(player_dict_list: list):
         unserialized_list = []
         for player_dict in player_dict_list:
-            f, l, g, b, r = player_dict.values()
-            unserialized_list.append(Player(f, l, b, g, r,))
+            f, l, b, g, r = player_dict.values()
+            unserialized_player=Player(f, l, b, g, r,)
+            unserialized_list.append(unserialized_player)
         return unserialized_list
 
     def serialize_tournament(tournament: Tournament):

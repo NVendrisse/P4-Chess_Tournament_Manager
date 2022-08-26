@@ -1,4 +1,3 @@
-from multiprocessing import managers
 from modules.tournament import Tournament
 from views.menus import *
 from modules.players import Player
@@ -31,7 +30,6 @@ class MainMenu:
             except TypeError:
                 print("0000 You have entered a wrong selector")
 
-
 class PlayersMenu:
     def __init__(self) -> None:
         Manager.clear_screen()
@@ -45,8 +43,7 @@ class PlayersMenu:
                     new_player = add_player.create_new()
                 elif selector == "2":
                     view_players = PlayersVisualization(Save.import_("players"))
-                    #testing
-                    pl=view_players.ordered_by_name()
+                    menu_display = view_players.select()
                 elif selector == "3":
                     return_back = MainMenu()
                     main_menu_selector = return_back.select(
@@ -55,7 +52,6 @@ class PlayersMenu:
                     print("This option is unavailable, please try again")
             except TypeError:
                 print("0001 You have entered a wrong selector")
-
 
 class PlayerCreation:
     def __init__(self, players_list=[]) -> None:
@@ -97,17 +93,48 @@ class PlayersVisualization:
     def __init__(self,players:list) -> None:
         Manager.clear_screen()
         self.players=players
+        
+    def select(self):
+        menu=PlayersDisplay.menu()
+        ans_menu=input("Sélection : ")
+        while True:
+            try:
+                if ans_menu == "1":
+                    self.ordered_by_name()
+                elif ans_menu == "2":
+                    self.ordered_by_rank()
+                elif ans_menu == "3":
+                    return_back = PlayersMenu()
+                    main_menu_selector = return_back.select(
+                        input("Enter your choice : "))
+                else:
+                    print("This option is unavailable, please try again")
+            except TypeError:
+                print("0005 You have entered a wrong selector")
+
     def ordered_by_name(self):
+        Manager.clear_screen()
         players_list=Manager.unserialize_player_dict(self.players)
         ordered_list=sorted(players_list, key=lambda player: player.lastname,reverse=False)
-        for player_ in ordered_list:
-            print(player_)
+        table_data=[]
+        for i in ordered_list:
+            table_data.append([i.firstname,i.lastname,i.birthdate,i.genre,i.rank])
+        player_display=PlayersDisplay.table(table_data)
         tamp=input("Press enter to continue...")
         back_to_menu=PlayersMenu()
         btm.select=back_to_menu.select(input("Enter your choice :"))
 
-    def ordered_by_rank():
-        pass
+    def ordered_by_rank(self):
+        Manager.clear_screen()
+        players_list=Manager.unserialize_player_dict(self.players)
+        ordered_list=sorted(players_list, key=lambda player: player.rank,reverse=False)
+        table_data=[]
+        for i in ordered_list:
+            table_data.append([i.firstname,i.lastname,i.birthdate,i.genre,i.rank])
+        player_display=PlayersDisplay.table(table_data)
+        tamp=input("Press enter to continue...")
+        back_to_menu=PlayersMenu()
+        btm.select=back_to_menu.select(input("Enter your choice :"))
 
 class TournamentMenu:
     def __init__(self) -> None:

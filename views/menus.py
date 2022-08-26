@@ -1,4 +1,6 @@
 from modules.coloprint import cprint
+from tabulate import tabulate
+
 class Menus:
 
     def main_menu():
@@ -36,5 +38,17 @@ class TournamentCreationInteractive:
     
     def tournament_add_player_menu():
         return "Gestion des joueurs du tournois : {}"
+
+class PlayersDisplay:
+
+    def menu():
+        cprint("Affichage des joueurs","black","bright_magenta")
+        print("1- Classé par nom")
+        print("2- Classé par rang")
+        print("3- Retour")
+    
+    def table(data):
+        cols_names=["Firstname","Lastname","Birthdate","Genre","Rank"]
+        print(tabulate(data,headers=cols_names))
 
         
