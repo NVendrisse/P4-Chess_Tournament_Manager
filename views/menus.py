@@ -12,21 +12,22 @@ class Menus:
 
     def players_menu():
         cprint("Menu des joueurs","black","bright_green")
-        cprint("1- Créer un nouveau joueur")
+        cprint("1- Créer une nouvelle liste de joueurs")
         cprint("2- Afficher la liste des joueurs")
-        cprint("3- Retour")
+        cprint("3- Ajouter de nouveaux joueurs à la liste actuelle")
+        cprint("4- Retour")
 
     def tournament_menu():
         cprint("Menu des Tournois","black","bright_green")
-        cprint("1- Jouer un tournois")
-        cprint("2- Créer un tournois")
+        cprint("1- Créer un tournois")
+        cprint("2- Modifier un tournois")
         cprint("3- Retour")
 
 
 class PlayersCreationInteract:
 
     def player_creation():
-        print("Création d'un nouveau joueur")
+        cprint("Création d'un nouveau joueur","black","cyan","italic")
 
     def ask_new():
         return "Voulez-vous créer un nouveau joueur?\n({}/8 joueurs créés)"
@@ -49,6 +50,6 @@ class PlayersDisplay:
     
     def table(data):
         cols_names=["Firstname","Lastname","Birthdate","Genre","Rank"]
-        print(tabulate(data,headers=cols_names))
+        cprint(tabulate(data,headers=cols_names,tablefmt="fancy_grid"),"bright_red","black","bold")
 
         

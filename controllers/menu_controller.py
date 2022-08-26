@@ -24,6 +24,7 @@ class MainMenu:
                     option_tournament = tournament_management.select(
                         input("Selection : "))
                 elif selector == "4":
+                    Manager.clear_screen()
                     exit()
                 else:
                     print("This option is unavailable, please try again")
@@ -45,6 +46,10 @@ class PlayersMenu:
                     view_players = PlayersVisualization(Save.import_("players"))
                     menu_display = view_players.select()
                 elif selector == "3":
+                    existing_players_dict=Save.import_("players")
+                    existing_players_list=Manager.unserialize_player_dict(existing_players_dict)
+                    add_player = AddingPlayer(existing_players_list).add()
+                elif selector == "4":
                     return_back = MainMenu()
                     main_menu_selector = return_back.select(
                         input("Enter your choice : "))
@@ -88,6 +93,14 @@ class PlayerCreation:
             saving_list=Save.export_(self.players_list,"players")
             return_back=PlayersMenu()
             back_selector=return_back.select(input("Enter your choice : "))
+
+class AddingPlayer:
+    def __init__(self,players_list) -> None:
+        self.players_list = players_list
+
+    def add(self):
+        adding=PlayerCreation(self.players_list)
+        creating=adding.create_new()
 
 class PlayersVisualization:
     def __init__(self,players:list) -> None:
@@ -175,7 +188,9 @@ class TournamentCreation:
         #Controle des inputs
         self.new_tournament=Tournament(n,l,dd,df,tc,d,[],rm,[])
         print(TournamentCreationInteractive.tournament_add_player_menu().format(n))
-        self.add_players_list(Save.import_("players"))
+        import_player_dict=Save.import_("players")
+        import_player_list=Manager.unserialize_player_dict(import_player_dict)
+        self.add_players_list(import_player_list)
         serialized_tournament=Manager.serialize_tournament(self.new_tournament)
         print(serialized_tournament)
         saving_tournament=Save.export_(serialized_tournament,"tournament")#erreur
