@@ -3,6 +3,7 @@ from views.menus import *
 from modules.players import Player
 from controllers.manager_controller import Manager
 from controllers.saving_controller import Save
+from controllers.play_tournament import Play
 
 
 class MainMenu:
@@ -14,7 +15,9 @@ class MainMenu:
         while True:
             try:
                 if selector == "1":
-                    play_tournament = 1
+                    tournament_serialized=Save.import_("tournament")
+                    tournament_unserialized=Manager.unserialize_tournament(tournament_serialized)
+                    play_tournament = Play(tournament_unserialized)
                 elif selector == "2":
                     player_management = PlayersMenu()
                     option_player = player_management.select(
@@ -90,7 +93,7 @@ class PlayerCreation:
                 back_selector=return_back.select(input("Enter your choice : "))
         else:
             player_dict=Manager.serialize_player_list(self.players_list)
-            saving_list=Save.export_(self.players_list,"players")
+            saving_list=Save.export_(self.player_dict ,"players")
             return_back=PlayersMenu()
             back_selector=return_back.select(input("Enter your choice : "))
 
@@ -158,10 +161,10 @@ class TournamentMenu:
         while True:
             try:
                 if selector == "1":
-                    start_tournament=1
-                elif selector == "2":
                     create_tournament=TournamentCreation()
                     new_tournament=create_tournament.create_new()
+                elif selector == "2":
+                    modify_tornament=2
                 elif selector == "3":
                     return_back = MainMenu()
                     main_menu_selector = return_back.select(
@@ -190,7 +193,7 @@ class TournamentCreation:
         print(TournamentCreationInteractive.tournament_add_player_menu().format(n))
         import_player_dict=Save.import_("players")
         import_player_list=Manager.unserialize_player_dict(import_player_dict)
-        self.add_players_list(import_player_list)
+        self.add_players_list(import_player_dict)
         serialized_tournament=Manager.serialize_tournament(self.new_tournament)
         print(serialized_tournament)
         saving_tournament=Save.export_(serialized_tournament,"tournament")#erreur
