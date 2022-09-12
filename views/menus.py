@@ -49,7 +49,7 @@ class PlayersDisplay:
         print("3- Retour")
     
     def table(data):
-        cols_names=["Firstname","Lastname","Birthdate","Genre","Rank"]
+        cols_names=["Firstname","Lastname","Birthdate","Genre","Rank","Score"]
         cprint(tabulate(data,headers=cols_names,tablefmt="fancy_grid"),"bright_red","black","bold")
 
         

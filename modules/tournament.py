@@ -14,6 +14,7 @@ class Tournament:
         self.round_amount = round_amount
         self.players = players
         self.results = results
+        self.current_turn = 1
 
     def store_results(self, updated_results: list = []):
         self.results = updated_results
@@ -58,4 +59,5 @@ class Turn:
         self.start = time.asctime()
 
     def turn_stop(self):
+        self.t.current_turn+=1
         self.stop = time.asctime()

@@ -134,7 +134,7 @@ class PlayersVisualization:
         ordered_list=sorted(players_list, key=lambda player: player.lastname,reverse=False)
         table_data=[]
         for i in ordered_list:
-            table_data.append([i.firstname,i.lastname,i.birthdate,i.genre,i.rank])
+            table_data.append([i.firstname,i.lastname,i.birthdate,i.genre,i.rank,i.score])
         player_display=PlayersDisplay.table(table_data)
         tamp=input("Press enter to continue...")
         back_to_menu=PlayersMenu()
@@ -146,7 +146,7 @@ class PlayersVisualization:
         ordered_list=sorted(players_list, key=lambda player: player.rank,reverse=False)
         table_data=[]
         for i in ordered_list:
-            table_data.append([i.firstname,i.lastname,i.birthdate,i.genre,i.rank])
+            table_data.append([i.firstname,i.lastname,i.birthdate,i.genre,i.rank,i.score])
         player_display=PlayersDisplay.table(table_data)
         tamp=input("Press enter to continue...")
         back_to_menu=PlayersMenu()
@@ -196,7 +196,7 @@ class TournamentCreation:
         self.add_players_list(import_player_dict)
         serialized_tournament=Manager.serialize_tournament(self.new_tournament)
         print(serialized_tournament)
-        saving_tournament=Save.export_(serialized_tournament,"tournament")#erreur
+        saving_tournament=Save.export_(serialized_tournament,"tournament")
         tournament_menu=TournamentMenu()
         tournament_selection=tournament_menu.select(input("Enter your choice : "))
 
