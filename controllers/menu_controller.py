@@ -18,6 +18,7 @@ class MainMenu:
                     tournament_serialized=Save.import_("tournament")
                     tournament_unserialized=Manager.unserialize_tournament(tournament_serialized)
                     play_tournament = Play(tournament_unserialized)
+                    play_selector = play_tournament.select(input("Selection : "))
                 elif selector == "2":
                     player_management = PlayersMenu()
                     option_player = player_management.select(

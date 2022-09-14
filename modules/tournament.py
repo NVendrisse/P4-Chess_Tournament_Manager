@@ -28,9 +28,9 @@ class Tournament:
 
 class Match:
 
-    def __init__(self, player_one: Player, player_two: Player) -> None:
-        self.player_one = player_one
-        self.player_two = player_two
+    def __init__(self, players:tuple) -> None:
+        self.player_one = players[0]
+        self.player_two = players[1]
         self.score_player_one = 0
         self.score_player_two = 0
 
@@ -39,6 +39,8 @@ class Match:
             "Score {} : ".format(self.player_one.lastname))
         self.score_player_two = input(
             "Score {} : ".format(self.player_two.lastname))
+        self.player_one.score+=self.score_player_one
+        self.player_two.score+=self.score_player_two
         return (self.score_player_one, self.score_player_two)
 
     def export_score(self):
