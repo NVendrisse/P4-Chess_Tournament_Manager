@@ -9,6 +9,7 @@ class Play:
         #Manager.clear_screen()
         menu_display=MainPlay.play_menu()
         self.tournament=tournament
+        self.players=self.tournament.players
         self.pairs=[]
         main_title=MainPlay.main_title().format(self.tournament.name)
     
@@ -23,8 +24,7 @@ class Play:
 
     def first_player_pairing(self):
         self.pairs.clear()
-        players=self.tournament.players
-        players_list=Manager.unserialize_player_dict(players)
+        players_list=Manager.unserialize_player_dict(self.players)
         ordered_players=sorted(players_list, key=lambda player: player.rank,reverse=False)
         for _index in range(len(ordered_players[:len(ordered_players)//2])):
             self.pairs.append((ordered_players[_index],ordered_players[_index+len(ordered_players)//2]))
@@ -40,24 +40,25 @@ class Play:
             self.play_turn(_round)
             self.sort_player()
             self.tournament.current_turn=_round.ct
-
+        self.tournament.tournament_stop()
         
         
 
     def sort_player(self):
         self.pairs.clear()
         players=self.tournament.players
-        players_list=Manager.unserialize_player_dict(players)
+        players_list=Manager.unserialize_player_dict(self.players)
         ordered_players=sorted(players_list, key=lambda player: player.score,reverse=False)
         for _index in range(len(ordered_players[:len(ordered_players)//2])):
             self.pairs.append((ordered_players[_index],ordered_players[_index+len(ordered_players)//2]))
 
     def play_turn(self, round:Turn):
+        
         round_display=cprint(MainPlay.round_display().format(self.tournament.current_turn))
         for match_number in range(len(self.pairs)):
             this_match=Match(self.pairs[match_number])
             match_play=this_match.define_score()
-            round.m.append(this_match.export_score)
+            round.m.append(this_match.export_score())
         round.ct+=1
 
 

@@ -35,12 +35,12 @@ class Match:
         self.score_player_two = 0
 
     def define_score(self):
-        self.score_player_one = input(
-            "Score {} : ".format(self.player_one.lastname))
-        self.score_player_two = input(
-            "Score {} : ".format(self.player_two.lastname))
-        self.player_one.score+=self.score_player_one
-        self.player_two.score+=self.score_player_two
+        self.score_player_one += int(input(
+            "Score {} : ".format(self.player_one.lastname)))
+        self.score_player_two += int(input(
+            "Score {} : ".format(self.player_two.lastname)))
+        self.player_one.score=int(self.score_player_one)
+        self.player_two.score=int(self.score_player_two)
         return (self.score_player_one, self.score_player_two)
 
     def export_score(self):
