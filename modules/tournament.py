@@ -1,6 +1,8 @@
 from modules.players import Player
 import time
 
+from views.play_view import MainPlay
+
 
 class Tournament:
     def __init__(self, name: str, location: str, start_date: str, end_date: str, time_control: str, description: str, turn=[], round_amount=4, players=[], results=[]):
@@ -31,21 +33,26 @@ class Match:
     def __init__(self, players:tuple) -> None:
         self.player_one = players[0]
         self.player_two = players[1]
-        self.score_player_one = 0
-        self.score_player_two = 0
-
+        
     def define_score(self):
-        self.score_player_one += int(input(
-            "Score {} : ".format(self.player_one.lastname)))
-        self.score_player_two += int(input(
-            "Score {} : ".format(self.player_two.lastname)))
-        self.player_one.score=int(self.score_player_one)
-        self.player_two.score=int(self.score_player_two)
-        return (self.score_player_one, self.score_player_two)
+        display=print(MainPlay.scoring_display().format(self.player_one.lastname,self.player_two.lastname))
+        
+        winner=input("Résultats : ")
+        if winner == "1":
+            self.player_one.score+=1
+        elif winner == "2":
+            self.player_two.score+=1
+        elif winner == "3":
+            self.player_one.score+=0.5
+            self.player_two.score+=0.5
+        else:
+            exit()
+
+        
 
     def export_score(self):
         score = ([self.player_one, self.player_two], [
-                 self.score_player_one, self.score_player_two])
+                 self.player_one.score, self.player_two.score])
         return score
 
 

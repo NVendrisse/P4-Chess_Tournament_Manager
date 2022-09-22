@@ -6,7 +6,7 @@ from views.play_view import *
 class Play:
 
     def __init__(self,tournament:Tournament) -> None:
-        #Manager.clear_screen()
+        Manager.clear_screen()
         menu_display=MainPlay.play_menu()
         self.tournament=tournament
         self.players=self.tournament.players
@@ -31,10 +31,7 @@ class Play:
         
     def start_tournament(self):
         self.tournament.tournament_start()
-        if self.tournament.current_turn==1:
-            self.first_player_pairing()
-        else:
-            self.sort_player()
+        
         _round=Turn(self.tournament,[],self.tournament.current_turn)
         while _round.ct <= int(self.tournament.round_amount):
             self.play_turn(_round)
@@ -46,20 +43,25 @@ class Play:
 
     def sort_player(self):
         self.pairs.clear()
-        players=self.tournament.players
         players_list=Manager.unserialize_player_dict(self.players)
         ordered_players=sorted(players_list, key=lambda player: player.score,reverse=False)
         for _index in range(len(ordered_players[:len(ordered_players)//2])):
             self.pairs.append((ordered_players[_index],ordered_players[_index+len(ordered_players)//2]))
 
     def play_turn(self, round:Turn):
-        
+        if round.ct==1:
+            self.first_player_pairing()
+        else:
+            self.sort_player()
         round_display=cprint(MainPlay.round_display().format(self.tournament.current_turn))
         for match_number in range(len(self.pairs)):
             this_match=Match(self.pairs[match_number])
             match_play=this_match.define_score()
-            round.m.append(this_match.export_score())
+            scoring=this_match.export_score()
+            round.m.append(scoring)
+            print(scoring[0][0].score)
         round.ct+=1
+
 
 
 

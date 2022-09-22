@@ -12,5 +12,8 @@ class MainPlay:
         cprint("1- Entrer les scores des matchs")
         cprint("2- Visualiser le classement")
         cprint("3- Retour")
+
+    def scoring_display():
+        return "Match {0} - {1}\n1 - {0} gagne le match\n2 - {1} gagne le match\n3 - Match nul"
     
     
