@@ -47,7 +47,7 @@ class Match:
             self.player_two.score+=0.5
         else:
             exit()
-
+        return self.player_one.score,self.player_two.score
         
 
     def export_score(self):
