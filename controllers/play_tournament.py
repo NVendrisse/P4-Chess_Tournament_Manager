@@ -1,8 +1,9 @@
 from controllers.menu_controller import *
-from modules.tournament import *
+from modules.tournament import Turn, Match
 from controllers.manager_controller import Manager
-from views.play_view import *
-from controllers.saving_controller import *
+from views.play_view import MainPlay
+from modules.coloprint import cprint
+from controllers.saving_controller import Save, TurnSave, MatchSave
 
 
 class Play:
@@ -11,12 +12,12 @@ class Play:
         tournament_serialized = Save.import_("tournament")
         tournament_unserialized = Manager.unserialize_tournament(
             tournament_serialized)
-        #Manager.clear_screen()
-        menu_display = MainPlay.play_menu()
+        Manager.clear_screen()
+        MainPlay.play_menu()
         self.tournament = tournament_unserialized
         self.players = self.tournament.players
         self.pairs = []
-        main_title = MainPlay.main_title().format(self.tournament.name)
+        MainPlay.main_title().format(self.tournament.name)
 
     def select(self, selection: int):
         if selection == "1":
@@ -25,7 +26,7 @@ class Play:
             pass
         else:
             return_back = MainMenu()
-            main_menu_selector = return_back.select(
+            return_back.select(
                 input("Enter your choice : "))
 
     def first_player_pairing(self):
@@ -46,13 +47,13 @@ class Play:
             self.tournament.current_turn = _round.ct
             self.tournament.players = self.ordered_players
         self.tournament.tournament_stop()
-        export_tournament=Manager.serialize_tournament(self.tournament)
-        saver=Save.export_(export_tournament,"tournament","./save/{}".format(self.tournament.name))
-        
+        export_tournament = Manager.serialize_tournament(self.tournament)
+        Save.export_(export_tournament, "tournament",
+                     "./save/{}".format(self.tournament.name))
 
     def sort_player(self):
         self.pairs.clear()
-        old_list = self.ordered_players
+        self.ordered_players
         self.ordered_players = sorted(
             self.ordered_players, key=lambda player: player.score, reverse=True)
         for _index in range(len(self.ordered_players[:len(self.ordered_players)//2])):
@@ -65,11 +66,11 @@ class Play:
             self.first_player_pairing()
         else:
             self.sort_player()
-        round_display = cprint(MainPlay.round_display().format(
+        cprint(MainPlay.round_display().format(
             self.tournament.current_turn))
         ranking = ((i.firstname, i.lastname, i.score)
                    for i in self.ordered_players)
-        ranking_dis = MainPlay.ranking_display(ranking)
+        MainPlay.ranking_display(ranking)
         for match_number in range(len(self.pairs)):
             match_pair = (self.ordered_players[self.pairs[match_number][0]],
                           self.ordered_players[self.pairs[match_number][1]])
@@ -78,17 +79,17 @@ class Play:
             scoring = this_match.export_score()
             round.m.append(scoring)
             match_pair[0].score, match_pair[1].score = match_play
-            save_match = MatchSave.save(round, this_match)
+            MatchSave.save(round, this_match)
             self.saver()
         round.turn_stop()
-        save_turn = TurnSave.save(self.tournament, round)
+        TurnSave.save(self.tournament, round)
         self.saver()
         round.ct += 1
 
     def saver(self):
-        print("saver func")
         player_list = Manager.serialize_player_list(self.ordered_players)
-        save_player = Save.update_(player_list, "players")
+        Save.update_(player_list, "players")
 
         serial_tournament = Manager.serialize_tournament(self.tournament)
-        save_tournament = Save.update_(serial_tournament, "tournament")
+        Save.update_(serial_tournament, "tournament",
+                     "./save/{}".format(self.tournament.name))

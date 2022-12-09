@@ -11,4 +11,3 @@ class Player:
 
     def serialize(self):
         return {"firstname": self.firstname, "lastname": self.lastname, "birthdate": self.birthdate, "genre": self.genre, "rank": self.rank, "score": self.score}
-
