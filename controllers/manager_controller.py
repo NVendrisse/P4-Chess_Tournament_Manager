@@ -24,7 +24,7 @@ class Manager:
         return_dict = {"name": tournament.name, "location": tournament.location, "start_date": tournament.start_date, "end_date": tournament.end_date, "turn": tournament.turn,
                        "time_control": tournament.time_control, "description": tournament.description, "round_amount": tournament.round_amount, "players": tournament.players, "results": tournament.results}
 
-        return [return_dict]
+        return return_dict
 
     def unserialize_tournament(serialised_tournament: list):
         print(serialised_tournament[0].values())

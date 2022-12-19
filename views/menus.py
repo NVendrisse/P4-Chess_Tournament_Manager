@@ -4,6 +4,10 @@ from tabulate import tabulate
 
 class Menus:
 
+    def splash_screen(splash:str):
+        cprint(splash,"bright_white","black")
+
+
     def main_menu():
         cprint("Tournois d'échecs", "black", "bright_green")
         cprint("1- Jouer un tournoi")

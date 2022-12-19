@@ -7,6 +7,13 @@ from controllers.play_tournament import Play
 from controllers.flake8_generator import FlakeControl
 import re
 
+class SplashScreenLoader:
+    def display():
+        file = open("./views/chess_piece.txt")
+        file_content = file.read()
+        Menus.splash_screen(file_content)
+        file.close()
+        
 
 class MainMenu:
     def __init__(self) -> None:
@@ -64,8 +71,10 @@ class PlayersMenu:
                         input("Enter your choice : "))
                 else:
                     print("This option is unavailable, please try again")
+                    break
             except TypeError:
                 print("0001 You have entered a wrong selector")
+                break
 
 
 class PlayerCreation:
@@ -140,8 +149,10 @@ class PlayersVisualization:
                         input("Enter your choice : "))
                 else:
                     print("This option is unavailable, please try again")
+                    break
             except TypeError:
                 print("0005 You have entered a wrong selector")
+                break
 
     def ordered_by_name(self):
         Manager.clear_screen()
@@ -191,6 +202,7 @@ class TournamentMenu:
                         input("Enter your choice : "))
                 else:
                     print("This option is unavailable, please try again")
+                    break
             except TypeError:
                 print("0002 You have entered a wrong selector")
                 break
@@ -219,7 +231,8 @@ class TournamentCreation:
         serialized_tournament = Manager.serialize_tournament(
             self.new_tournament)
         print(serialized_tournament)
-        Save.export_(serialized_tournament, "tournament")
+        input()
+        Save.export_(serialized_tournament, "{}".format(n))
         tournament_menu = TournamentMenu()
         tournament_menu.select(
             input("Enter your choice : "))

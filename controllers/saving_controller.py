@@ -1,5 +1,6 @@
 from tinydb import TinyDB as tdb
 from modules.tournament import Match, Tournament, Turn
+from os import listdir
 
 
 class Save:
@@ -8,7 +9,9 @@ class Save:
         db = tdb("{}.json".format(db_name))
         table = db.table(table_name)
         table.truncate()
-        table.insert_multiple(data)
+        print("test : "+ str(data))
+        input()
+        table.insert_multiple([data])
 
     def import_(table_name: str, db_name="db"):
         db = tdb("{}.json".format(db_name))
@@ -19,6 +22,11 @@ class Save:
         db = tdb("{}.json".format(db_name))
         table = db.table(table_name)
         table.update({"1": data})
+
+    def select_tournament():
+        tournament_list = listdir("./save")
+        return tournament_list
+        
 
 
 class TurnSave:

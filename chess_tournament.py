@@ -1,7 +1,9 @@
-from controllers.menu_controller import MainMenu
+from controllers.menu_controller import MainMenu, SplashScreenLoader
 
 
 def main():
+    SplashScreenLoader.display()
+    input("Press enter to start...")
     main_menu = MainMenu()
     main_menu.select(input("Enter your choice : "))
 

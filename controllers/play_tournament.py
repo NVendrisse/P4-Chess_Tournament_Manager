@@ -9,7 +9,10 @@ from controllers.saving_controller import Save, TurnSave, MatchSave
 class Play:
 
     def __init__(self) -> None:
-        tournament_serialized = Save.import_("tournament")
+        tournament_available = Save.select_tournament()
+        display_tournament = MainPlay.tournament_list_display(tournament_available)
+        selected_tournament = input("Sélection du tournois : ")
+        tournament_serialized = Save.import_("tournament",tournament_available[selected_tournament-1])
         tournament_unserialized = Manager.unserialize_tournament(
             tournament_serialized)
         Manager.clear_screen()

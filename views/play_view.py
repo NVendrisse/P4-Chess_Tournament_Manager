@@ -4,6 +4,14 @@ from tabulate import tabulate
 
 class MainPlay:
 
+    def tournament_list_display(tournament_list:list):
+        print(tournament_list)
+        columns = ["n°", "Tournament"]
+        selectors = [i + 1 for i in range(len(tournament_list))]
+        for t in range(len(tournament_list)):
+            cprint("{} : {}".format(selectors[t], tournament_list[t]))
+        
+
     def main_title():
         return "Début du tournois : {}"
 
