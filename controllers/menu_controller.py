@@ -1,14 +1,17 @@
 from modules.tournament import Tournament
 from views.menus import Menus, PlayersCreationInteract, PlayersDisplay, TournamentCreationInteractive
+from views.play_view import MainPlay
 from modules.players import Player
 from controllers.manager_controller import Manager
 from controllers.saving_controller import Save
 from controllers.play_tournament import Play
 from controllers.flake8_generator import FlakeControl
 import re
+import os
 
 class SplashScreenLoader:
     def display():
+        Manager.clear_screen()
         file = open("./views/chess_piece.txt")
         file_content = file.read()
         Menus.splash_screen(file_content)
@@ -54,14 +57,21 @@ class PlayersMenu:
         while True:
             try:
                 if selector == "1":
-                    add_player = PlayerCreation()
+                    new_list_name = input("Nom de la nouvelle liste de joueur")
+                    add_player = PlayerCreation(listname=new_list_name)
                     add_player.create_new()
                 elif selector == "2":
-                    view_players = PlayersVisualization(
-                        Save.import_("players"))
+                    existing_list = os.listdir("./save/players_list")
+                    MainPlay.list_display(existing_list)
+                    select_list = input("Sélection d'une liste de joueur : ")
+                    existing_players_dict = Save.import_("players", "./save/players_list/{}".format(existing_list[select_list]))
+                    view_players = PlayersVisualization(existing_players_dict)
                     view_players.select()
                 elif selector == "3":
-                    existing_players_dict = Save.import_("players")
+                    existing_list = os.listdir("./save/players_list")
+                    MainPlay.list_display(existing_list)
+                    select_list = input("Sélection d'une liste de joueur : ")
+                    existing_players_dict = Save.import_("players", "./save/players_list/{}".format(existing_list[select_list]))
                     existing_players_list = Manager.unserialize_player_dict(
                         existing_players_dict)
                     add_player = AddingPlayer(existing_players_list).add()
@@ -78,12 +88,15 @@ class PlayersMenu:
 
 
 class PlayerCreation:
-    def __init__(self, players_list=[]) -> None:
+    def __init__(self, players_list=[], listname = "") -> None:
         Manager.clear_screen()
         self.players_list = players_list
+        self.list_name = listname
         PlayersCreationInteract.player_creation()
 
     def create_new(self):
+        
+        Manager.clear_screen()
         fname = input("Prénom : ")
         lname = input("Nom : ")
         bdate = ""
@@ -103,19 +116,19 @@ class PlayerCreation:
                 self.create_new()
             elif answer == "N" or answer == "n":
                 player_dict = Manager.serialize_player_list(self.players_list)
-                Save.export_(player_dict, "players")
+                Save.export_(player_dict, "players", "./save/players_list/{}".format(self.list_name))
                 return_back = PlayersMenu()
                 return_back.select(
                     input("Enter your choice : "))
             else:
                 player_dict = Manager.serialize_player_list(self.players_list)
-                Save.export_(self.players_list, "players")
+                Save.export_(player_dict, "players", "./save/players_list/{}".format(self.list_name))
                 return_back = PlayersMenu()
                 return_back.select(
                     input("Enter your choice : "))
         else:
             player_dict = Manager.serialize_player_list(self.players_list)
-            Save.export_(player_dict, "players")
+            Save.export_(player_dict, "players", "./save/players_list/{}".format(self.list_name))
             return_back = PlayersMenu()
             return_back.select(input("Enter your choice : "))
 
@@ -195,7 +208,7 @@ class TournamentMenu:
                     create_tournament = TournamentCreation()
                     create_tournament.create_new()
                 elif selector == "2":
-                    modify_tornament = 2
+                    pass
                 elif selector == "3":
                     return_back = MainMenu()
                     return_back.select(
@@ -224,7 +237,10 @@ class TournamentCreation:
         # Controle des inputs
         self.new_tournament = Tournament(n, loc, dd, df, tc, d, [], rm, [])
         print(TournamentCreationInteractive.tournament_add_player_menu().format(n))
-        import_player_dict = Save.import_("players")
+        existing_list = os.listdir("./save/players_list")
+        MainPlay.list_display(existing_list)
+        select_list = input("Sélection d'une liste de joueur")
+        import_player_dict = Save.import_("players", "./save/players_list/{}".format(existing_list[select_list]))         
         import_player_list = Manager.unserialize_player_dict(
             import_player_dict)
         self.add_players_list(import_player_list)
@@ -232,7 +248,8 @@ class TournamentCreation:
             self.new_tournament)
         print(serialized_tournament)
         input()
-        Save.export_(serialized_tournament, "{}".format(n))
+        Save.export_(serialized_tournament, "tournament",
+                     "./save/{}".format(n))
         tournament_menu = TournamentMenu()
         tournament_menu.select(
             input("Enter your choice : "))

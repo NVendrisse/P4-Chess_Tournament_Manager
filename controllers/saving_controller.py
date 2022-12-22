@@ -11,7 +11,7 @@ class Save:
         table.truncate()
         print("test : "+ str(data))
         input()
-        table.insert_multiple([data])
+        table.insert_multiple(data)
 
     def import_(table_name: str, db_name="db"):
         db = tdb("{}.json".format(db_name))
