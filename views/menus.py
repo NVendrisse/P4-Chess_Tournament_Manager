@@ -25,7 +25,7 @@ class Menus:
     def tournament_menu():
         cprint("Menu des Tournois", "black", "bright_green")
         cprint("1- Créer un tournois")
-        cprint("2- Modifier un tournois")
+        cprint("2- Visualisation des tournois")
         cprint("3- Retour")
 
 
@@ -60,3 +60,8 @@ class PlayersDisplay:
                       "Birthdate", "Genre", "Rank", "Score"]
         cprint(tabulate(data, headers=cols_names, tablefmt="fancy_grid"),
                "bright_red", "black", "bold")
+
+class TournamentDisplay:
+    def display(data:dict):
+        for v in data.values:
+            print(v)

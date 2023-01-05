@@ -1,5 +1,5 @@
 from modules.tournament import Tournament
-from views.menus import Menus, PlayersCreationInteract, PlayersDisplay, TournamentCreationInteractive
+from views.menus import Menus, PlayersCreationInteract, PlayersDisplay, TournamentCreationInteractive, TournamentDisplay
 from views.play_view import MainPlay
 from modules.players import Player
 from controllers.manager_controller import Manager
@@ -24,7 +24,7 @@ class MainMenu:
         Manager.clear_screen()
         self.is_players_list = bool(len(os.listdir("./save/players_list")))
         self.is_tournament_list = bool(len(os.listdir("./save/tournament")))
-        Menus.main_menu(self.is_tournament_list,self.is_players_list)
+        Menus.main_menu(self.is_tournament_list, self.is_players_list)
 
     def select(self, selector: int):
         while True:
@@ -48,8 +48,8 @@ class MainMenu:
                 else:
                     print("This option is unavailable, please try again")
                     input("Press enter to continue")
-                    menu=MainMenu()
-                    select_item=menu.select(input("Selection : "))
+                    menu = MainMenu()
+                    select_item = menu.select(input("Selection : "))
             except TypeError:
                 print("0000 You have entered a wrong selector")
                 break
@@ -65,7 +65,7 @@ class PlayersMenu:
             try:
                 if selector == "1":
                     new_list_name = input(
-                        "Nom de la nouvelle liste de joueur :")
+                        "Nom de la nouvelle liste de joueur : ")
                     add_player = PlayerCreation(listname=new_list_name)
                     add_player.create_new()
                 elif selector == "2":
@@ -73,7 +73,7 @@ class PlayersMenu:
                     MainPlay.list_display(existing_list)
                     select_list = input("Sélection d'une liste de joueur : ")
                     existing_players_dict = Save.import_(
-                        "players", "./save/players_list/{}".format(existing_list[select_list]))
+                        "players", "./save/players_list/{}".format(existing_list[int(select_list)-1][:len(existing_list[int(select_list)-1])-5]))
                     view_players = PlayersVisualization(existing_players_dict)
                     view_players.select()
                 elif selector == "3":
@@ -81,10 +81,11 @@ class PlayersMenu:
                     MainPlay.list_display(existing_list)
                     select_list = input("Sélection d'une liste de joueur : ")
                     existing_players_dict = Save.import_(
-                        "players", "./save/players_list/{}".format(existing_list[select_list]))
+                        "players", "./save/players_list/{}".format(existing_list[int(select_list)-1][:len(existing_list[int(select_list)-1])-5]))
                     existing_players_list = Manager.unserialize_player_dict(
                         existing_players_dict)
-                    add_player = AddingPlayer(existing_players_list).add()
+                    add_player = AddingPlayer(existing_players_list, existing_list[int(
+                        select_list)-1][:len(existing_list[int(select_list)-1])-5]).add()
                 elif selector == "4":
                     return_back = MainMenu()
                     return_back.select(
@@ -147,11 +148,12 @@ class PlayerCreation:
 
 
 class AddingPlayer:
-    def __init__(self, players_list) -> None:
+    def __init__(self, players_list, players_list_name: str) -> None:
         self.players_list = players_list
+        self.players_list_name = players_list_name
 
     def add(self):
-        adding = PlayerCreation(self.players_list)
+        adding = PlayerCreation(self.players_list, self.players_list_name)
         adding.create_new()
 
 
@@ -221,7 +223,7 @@ class TournamentMenu:
                     create_tournament = TournamentCreation()
                     create_tournament.create_new()
                 elif selector == "2":
-                    pass
+                    TournamentVisualization()
                 elif selector == "3":
                     return_back = MainMenu()
                     return_back.select(
@@ -265,3 +267,19 @@ class TournamentCreation:
         tournament_menu = TournamentMenu()
         tournament_menu.select(
             input("Enter your choice : "))
+
+class TournamentVisualization:
+
+    def __init__(self) -> None:
+        tournament_available = Save.select_tournament()
+        display_tournament = MainPlay.list_display(tournament_available)
+        selected_tournament = input("Sélection du tournois : ")
+        tournament_name=tournament_available[int(selected_tournament)-1]
+        tournament_serialized = Save.import_("tournament","./save/tournament/{}".format(tournament_name[:len(tournament_name)-5]))
+        tournament_unserialized = Manager.unserialize_tournament(
+            tournament_serialized)
+        self.t = tournament_serialized
+
+    def display(self):
+        TournamentDisplay.display(self.t)
+

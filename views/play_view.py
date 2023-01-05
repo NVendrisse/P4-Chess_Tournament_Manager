@@ -5,8 +5,6 @@ from tabulate import tabulate
 class MainPlay:
 
     def list_display(list_to_display:list):
-        print(list_to_display)
-        columns = ["n°", "Tournament"]
         selectors = [i + 1 for i in range(len(list_to_display))]
         for t in range(len(list_to_display)):
             cprint("{} : {}".format(selectors[t], list_to_display[t]))
