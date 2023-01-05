@@ -5,12 +5,10 @@ from os import listdir
 
 class Save:
 
-    def export_(data: dict, table_name: str, db_name="db"):
+    def export_(data: list, table_name: str, db_name="db"):
         db = tdb("{}.json".format(db_name))
         table = db.table(table_name)
         table.truncate()
-        print("test : "+ str(data))
-        input()
         table.insert_multiple(data)
 
     def import_(table_name: str, db_name="db"):
@@ -24,7 +22,7 @@ class Save:
         table.update({"1": data})
 
     def select_tournament():
-        tournament_list = listdir("./save")
+        tournament_list = listdir("./save/tournament")
         return tournament_list
         
 

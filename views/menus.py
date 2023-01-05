@@ -8,11 +8,11 @@ class Menus:
         cprint(splash,"bright_white","black")
 
 
-    def main_menu():
+    def main_menu(print_play:bool,print_tournament:bool):
         cprint("Tournois d'échecs", "black", "bright_green")
-        cprint("1- Jouer un tournoi")
+        cprint("1- Jouer un tournoi",foreground_color=("bright_red" if not print_play else "bright_white"),attribute=("italic" if not print_play else "None"))
         cprint("2- Gestion des joueurs")
-        cprint("3- Gestion des tournois")
+        cprint("3- Gestion des tournois",foreground_color=("bright_red" if not print_tournament else "bright_white"),attribute=("italic" if not print_tournament else "None"))
         cprint("4- Quitter et générer un rapport sur le programme")
 
     def players_menu():

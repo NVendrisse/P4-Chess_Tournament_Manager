@@ -10,9 +10,10 @@ class Play:
 
     def __init__(self) -> None:
         tournament_available = Save.select_tournament()
-        display_tournament = MainPlay.tournament_list_display(tournament_available)
+        display_tournament = MainPlay.list_display(tournament_available)
         selected_tournament = input("Sélection du tournois : ")
-        tournament_serialized = Save.import_("tournament",tournament_available[selected_tournament-1])
+        tournament_name=tournament_available[int(selected_tournament)-1]
+        tournament_serialized = Save.import_("tournament","./save/tournament/{}".format(tournament_name[:len(tournament_name)-5]))
         tournament_unserialized = Manager.unserialize_tournament(
             tournament_serialized)
         Manager.clear_screen()
@@ -52,7 +53,7 @@ class Play:
         self.tournament.tournament_stop()
         export_tournament = Manager.serialize_tournament(self.tournament)
         Save.export_(export_tournament, "tournament",
-                     "./save/{}".format(self.tournament.name))
+                     "./save/tournament/{}".format(self.tournament.name))
 
     def sort_player(self):
         self.pairs.clear()
@@ -95,4 +96,4 @@ class Play:
 
         serial_tournament = Manager.serialize_tournament(self.tournament)
         Save.update_(serial_tournament, "tournament",
-                     "./save/{}".format(self.tournament.name))
+                     "./save/tournament/{}".format(self.tournament.name))

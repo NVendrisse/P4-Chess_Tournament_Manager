@@ -21,10 +21,11 @@ class Manager:
         return unserialized_list
 
     def serialize_tournament(tournament: Tournament):
+        serialized_tournament=[]
         return_dict = {"name": tournament.name, "location": tournament.location, "start_date": tournament.start_date, "end_date": tournament.end_date, "turn": tournament.turn,
                        "time_control": tournament.time_control, "description": tournament.description, "round_amount": tournament.round_amount, "players": tournament.players, "results": tournament.results}
-
-        return return_dict
+        serialized_tournament.append(return_dict)
+        return serialized_tournament
 
     def unserialize_tournament(serialised_tournament: list):
         print(serialised_tournament[0].values())
@@ -33,6 +34,7 @@ class Manager:
         return unserialized_tournament
 
     def clear_screen():
+        
         if os.name == "posix":
             os.system("clear")
         else:
