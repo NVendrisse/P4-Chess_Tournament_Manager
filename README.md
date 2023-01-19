@@ -33,10 +33,13 @@ python P4-Chess_Tournament_Manager
 ```
 
 Then you will get a little splash screen wich indicate the version of the software you are using
+
+![main menu](https://ftp.vendrisse.com/images/_projet4_python/splash.png)
+
 ## 1 Main menu
 After that you'll get to the main menu, *note that if you don't have any players list you can't create a tournament and of course if you dont have a tournament created you can't play*
 
-
+![main menu](https://ftp.vendrisse.com/images/_projet4_python/main_menu.png)
 
 ## 2 Create some players
 In order to create a list of players for a tournament use the create list option name your new list and fill the form
@@ -45,11 +48,14 @@ if you'd like to add players in a list use the add player option, select the lis
 
 if you want to display a list use the display option and select the ordering option you want to use
 
+![players menu](https://ftp.vendrisse.com/images/_projet4_python/players_menu.png)
 
 ## 3 Create a tournament
 In order to create a tournament use the creation option, then fill in the form, after that you can select a player list that will be incorporated in the tournament
 
 To display information about a tournament use the display option and select wich tournament you want to see
+
+![main menu](https://ftp.vendrisse.com/images/_projet4_python/tours_menu.png)
 
 ## 4 Play a tournament
 After creating players list and a tournament you'll get to play it

@@ -91,9 +91,9 @@ class Play:
         round.ct += 1
 
     def saver(self):
-        player_list = Manager.serialize_player_list(self.ordered_players)
-        Save.update_(player_list, "players")
-
+        """player_list = Manager.serialize_player_list(self.ordered_players)
+        Save.update_(player_list, "players")"""
+        self.tournament.players = self.ordered_players
         serial_tournament = Manager.serialize_tournament(self.tournament)
-        Save.update_(serial_tournament, "tournament",
+        Save.export_(serial_tournament, "tournament",
                      "./save/tournament/{}".format(self.tournament.name))
