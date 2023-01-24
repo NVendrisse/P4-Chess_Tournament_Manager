@@ -34,7 +34,7 @@ python P4-Chess_Tournament_Manager
 
 Then you will get a little splash screen wich indicate the version of the software you are using
 
-![main menu](https://ftp.vendrisse.com/images/_projet4_python/splash.png)
+<img source="https://ftp.vendrisse.com/images/_projet4_python/splash.png">
 
 ## 1 Main menu
 After that you'll get to the main menu, *note that if you don't have any players list you can't create a tournament and of course if you dont have a tournament created you can't play*

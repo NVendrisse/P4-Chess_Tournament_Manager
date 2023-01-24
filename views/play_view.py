@@ -3,7 +3,16 @@ from tabulate import tabulate
 
 
 class MainPlay:
+    '''
+    Mainplay class is a view class for every display during a play of a tournament
+    
+    function information
+    list_display : display a list used in the display of players list and tournament list
 
+    main_title : display the name of the tournament 
+
+    
+    '''
     def list_display(list_to_display:list):
         selectors = [i + 1 for i in range(len(list_to_display))]
         for t in range(len(list_to_display)):
