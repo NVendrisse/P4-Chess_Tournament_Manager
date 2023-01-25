@@ -2,7 +2,7 @@ from controllers.menu_controller import MainMenu, SplashScreenLoader
 
 
 def main():
-    #main function outside MVC, launch the soft
+    # main function outside MVC, launch the soft
     SplashScreenLoader.display()
     input("Press enter to start...")
     main_menu = MainMenu()

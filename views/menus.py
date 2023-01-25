@@ -4,15 +4,16 @@ from tabulate import tabulate
 
 class Menus:
 
-    def splash_screen(splash:str):
-        cprint(splash,"bright_white","black")
+    def splash_screen(splash: str):
+        cprint(splash, "bright_white", "black")
 
-
-    def main_menu(print_play:bool,print_tournament:bool):
+    def main_menu(print_play: bool, print_tournament: bool):
         cprint("Tournois d'échecs", "black", "bright_green")
-        cprint("1- Jouer un tournoi",foreground_color=("bright_red" if not print_play else "bright_white"),attribute=("italic" if not print_play else "None"))
+        cprint("1- Jouer un tournoi", foreground_color=("bright_red" if not print_play else "bright_white"),
+               attribute=("italic" if not print_play else "None"))
         cprint("2- Gestion des joueurs")
-        cprint("3- Gestion des tournois",foreground_color=("bright_red" if not print_tournament else "bright_white"),attribute=("italic" if not print_tournament else "None"))
+        cprint("3- Gestion des tournois", foreground_color=("bright_red" if not print_tournament else "bright_white"),
+               attribute=("italic" if not print_tournament else "None"))
         cprint("4- Quitter et générer un rapport sur le programme")
 
     def players_menu():
@@ -61,7 +62,8 @@ class PlayersDisplay:
         cprint(tabulate(data, headers=cols_names, tablefmt="fancy_grid"),
                "bright_red", "black", "bold")
 
+
 class TournamentDisplay:
-    def display(data:dict):
+    def display(data: dict):
         for v in data.values:
             print(v)

@@ -1,4 +1,4 @@
-from controllers.menu_controller import *
+import controllers.menu_controller
 from modules.tournament import Turn, Match
 from controllers.manager_controller import Manager
 from views.play_view import MainPlay
@@ -10,10 +10,11 @@ class Play:
 
     def __init__(self) -> None:
         tournament_available = Save.select_tournament()
-        display_tournament = MainPlay.list_display(tournament_available)
+        MainPlay.list_display(tournament_available)
         selected_tournament = input("Sélection du tournois : ")
-        tournament_name=tournament_available[int(selected_tournament)-1]
-        tournament_serialized = Save.import_("tournament","./save/tournament/{}".format(tournament_name[:len(tournament_name)-5]))
+        tournament_name = tournament_available[int(selected_tournament)-1]
+        tournament_serialized = Save.import_(
+            "tournament", "./save/tournament/{}".format(tournament_name[:len(tournament_name) - 5]))
         tournament_unserialized = Manager.unserialize_tournament(
             tournament_serialized)
         Manager.clear_screen()
@@ -29,7 +30,7 @@ class Play:
         elif selection == "2":
             pass
         else:
-            return_back = MainMenu()
+            return_back = controllers.menu_controller.MainMenu()
             return_back.select(
                 input("Enter your choice : "))
 
@@ -57,7 +58,7 @@ class Play:
 
     def sort_player(self):
         self.pairs.clear()
-        self.ordered_players
+        self.ordered_players = self.tournament.players
         self.ordered_players = sorted(
             self.ordered_players, key=lambda player: player.score, reverse=True)
         for _index in range(len(self.ordered_players[:len(self.ordered_players)//2])):
@@ -80,11 +81,16 @@ class Play:
                           self.ordered_players[self.pairs[match_number][1]])
             this_match = Match(match_pair)
             match_play = this_match.define_score()
+
             scoring = this_match.export_score()
+
             round.m.append(scoring)
+
             match_pair[0].score, match_pair[1].score = match_play
             MatchSave.save(round, this_match)
+
             self.saver()
+
         round.turn_stop()
         TurnSave.save(self.tournament, round)
         self.saver()

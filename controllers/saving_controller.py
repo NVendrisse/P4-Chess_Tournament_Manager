@@ -24,7 +24,6 @@ class Save:
     def select_tournament():
         tournament_list = listdir("./save/tournament")
         return tournament_list
-        
 
 
 class TurnSave:

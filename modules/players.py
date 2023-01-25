@@ -10,4 +10,5 @@ class Player:
         self.score = 0
 
     def serialize(self):
-        return {"firstname": self.firstname, "lastname": self.lastname, "birthdate": self.birthdate, "genre": self.genre, "rank": self.rank, "score": self.score}
+        return {"firstname": self.firstname, "lastname": self.lastname, "birthdate": self.birthdate,
+                "genre": self.genre, "rank": self.rank, "score": self.score}
