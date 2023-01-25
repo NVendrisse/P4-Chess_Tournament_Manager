@@ -128,9 +128,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# JSON and HTML
-.json
-.html
-.svg
+# others
+flake-report/
+save/
 
 ##
