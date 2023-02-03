@@ -76,19 +76,16 @@ class Play:
         ranking = ((i.firstname, i.lastname, i.score)
                    for i in self.ordered_players)
         MainPlay.ranking_display(ranking)
+
         for match_number in range(len(self.pairs)):
             match_pair = (self.ordered_players[self.pairs[match_number][0]],
                           self.ordered_players[self.pairs[match_number][1]])
             this_match = Match(match_pair)
             match_play = this_match.define_score()
-
             scoring = this_match.export_score()
-
             round.m.append(scoring)
-
             match_pair[0].score, match_pair[1].score = match_play
             MatchSave.save(round, this_match)
-
             self.saver()
 
         round.turn_stop()
@@ -97,9 +94,7 @@ class Play:
         round.ct += 1
 
     def saver(self):
-        """player_list = Manager.serialize_player_list(self.ordered_players)
-        Save.update_(player_list, "players")"""
-        self.tournament.players = self.ordered_players
+        self.tournament.players = Manager.serialize_player_list(self.ordered_players)
         serial_tournament = Manager.serialize_tournament(self.tournament)
         Save.export_(serial_tournament, "tournament",
                      "./save/tournament/{}".format(self.tournament.name))

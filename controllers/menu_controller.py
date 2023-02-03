@@ -29,31 +29,31 @@ class MainMenu:
 
     def select(self, selector: int):
         while True:
-            try:
-                if selector == "1" and self.is_tournament_list:
-                    play_tournament = Play()
-                    play_tournament.select(
-                        input("Selection : "))
-                elif selector == "2":
-                    player_management = PlayersMenu()
-                    player_management.select(
-                        input("Selection : "))
-                elif selector == "3" and self.is_players_list:
-                    tournament_management = TournamentMenu()
-                    tournament_management.select(
-                        input("Selection : "))
-                elif selector == "4":
-                    Manager.clear_screen()
-                    FlakeControl.control()
-                    exit()
-                else:
-                    print("This option is unavailable, please try again")
-                    input("Press enter to continue")
-                    menu = MainMenu()
-                    menu.select(input("Selection : "))
-            except TypeError:
+            '''try:'''
+            if selector == "1" and self.is_tournament_list:
+                play_tournament = Play()
+                play_tournament.select(
+                    input("Selection : "))
+            elif selector == "2":
+                player_management = PlayersMenu()
+                player_management.select(
+                    input("Selection : "))
+            elif selector == "3" and self.is_players_list:
+                tournament_management = TournamentMenu()
+                tournament_management.select(
+                    input("Selection : "))
+            elif selector == "4":
+                Manager.clear_screen()
+                FlakeControl.control()
+                exit()
+            else:
+                print("This option is unavailable, please try again")
+                input("Press enter to continue")
+                menu = MainMenu()
+                menu.select(input("Selection : "))
+            '''except TypeError:
                 print("0000 You have entered a wrong selector")
-                break
+                break'''
 
 
 class PlayersMenu:
@@ -221,22 +221,22 @@ class TournamentMenu:
 
     def select(self, selector: int):
         while True:
-            try:
-                if selector == "1":
-                    create_tournament = TournamentCreation()
-                    create_tournament.create_new()
-                elif selector == "2":
-                    TournamentVisualization()
-                elif selector == "3":
-                    return_back = MainMenu()
-                    return_back.select(
-                        input("Enter your choice : "))
-                else:
-                    print("This option is unavailable, please try again")
-                    break
-            except TypeError:
-                print("0002 You have entered a wrong selector")
+            '''try:'''
+            if selector == "1":
+                create_tournament = TournamentCreation()
+                create_tournament.create_new()
+            elif selector == "2":
+                TournamentVisualization()
+            elif selector == "3":
+                return_back = MainMenu()
+                return_back.select(
+                    input("Enter your choice : "))
+            else:
+                print("This option is unavailable, please try again")
                 break
+            '''except TypeError:
+                print("0002 You have entered a wrong selector")
+                break'''
 
 
 class TournamentCreation:

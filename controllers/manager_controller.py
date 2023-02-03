@@ -44,6 +44,8 @@ class Manager:
     def clear_screen():
 
         if os.name == "posix":
-            os.system("clear")
+            #os.system("clear")
+            pass
         else:
-            os.system("cls")
+            #os.system("cls")
+            pass

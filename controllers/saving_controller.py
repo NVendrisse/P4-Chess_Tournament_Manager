@@ -29,7 +29,7 @@ class Save:
 class TurnSave:
 
     def save(tournament: Tournament, _turn: Turn):
-        tournament.turn.append(_turn)
+        tournament.turn.append(_turn.serialized())
 
 
 class MatchSave:

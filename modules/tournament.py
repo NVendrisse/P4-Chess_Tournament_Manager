@@ -69,3 +69,6 @@ class Turn:
     def turn_stop(self):
         self.t.current_turn += 1
         self.stop = time.asctime()
+
+    def serialized(self):
+        return (self.t, self.m, self.ct)
