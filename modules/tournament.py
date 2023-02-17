@@ -16,6 +16,8 @@ class Tournament:
         self.players = players
         self.results = results
         self.current_turn = 1
+        self.start = ""
+        self.stop = ""
 
     def store_results(self, updated_results: list = []):
         self.results = updated_results
@@ -50,7 +52,7 @@ class Match:
         return self.player_one.score, self.player_two.score
 
     def export_score(self):
-        score = ([self.player_one, self.player_two], [
+        score = ([self.player_one.serialize(), self.player_two.serialize()], [
                  self.player_one.score, self.player_two.score])
         return score
 
@@ -71,4 +73,4 @@ class Turn:
         self.stop = time.asctime()
 
     def serialized(self):
-        return (self.t, self.m, self.ct)
+        return (self.name, self.m, self.ct)

@@ -1,5 +1,6 @@
 from modules.coloprint import cprint
 from tabulate import tabulate
+from modules.tournament import Tournament
 
 
 class Menus:
@@ -64,6 +65,11 @@ class PlayersDisplay:
 
 
 class TournamentDisplay:
-    def display(data: dict):
-        for v in data.values:
-            print(v)
+    def display(data: Tournament):
+        cprint(data.name)
+        cprint("Début : {} ({})| Fin : {} ({})".format(
+            data.start_date, data.start, data.end_date, data.stop))
+        cprint("Lieux : {}".format(data.location))
+        for i in data.turn:
+            cprint(i[0])
+            cprint(tabulate(i[1], tablefmt="fancy_grid"))

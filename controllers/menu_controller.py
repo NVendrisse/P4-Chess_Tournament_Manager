@@ -226,7 +226,8 @@ class TournamentMenu:
                 create_tournament = TournamentCreation()
                 create_tournament.create_new()
             elif selector == "2":
-                TournamentVisualization()
+                visu=TournamentVisualization()
+                visu.display()
             elif selector == "3":
                 return_back = MainMenu()
                 return_back.select(
@@ -281,9 +282,8 @@ class TournamentVisualization:
         tournament_name = tournament_available[int(selected_tournament)-1]
         tournament_serialized = Save.import_(
             "tournament", "./save/tournament/{}".format(tournament_name[:len(tournament_name)-5]))
-        Manager.unserialize_tournament(
-            tournament_serialized)
-        self.t = tournament_serialized
+        self.t = Manager.unserialize_tournament(tournament_serialized)
 
     def display(self):
+        Manager.clear_screen()
         TournamentDisplay.display(self.t)

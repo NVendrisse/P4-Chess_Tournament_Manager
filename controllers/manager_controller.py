@@ -36,7 +36,6 @@ class Manager:
         return serialized_tournament
 
     def unserialize_tournament(serialised_tournament: list):
-        print(len(serialised_tournament[0].values()))
         n, l, sd, ed, t, tc, d, ra, p, r = serialised_tournament[0].values()
         unserialized_tournament = Tournament(n, l, sd, ed, tc, d, t, ra, p, r)
         return unserialized_tournament
@@ -44,8 +43,6 @@ class Manager:
     def clear_screen():
 
         if os.name == "posix":
-            #os.system("clear")
-            pass
+            os.system("clear")
         else:
-            #os.system("cls")
-            pass
+            os.system("cls")
