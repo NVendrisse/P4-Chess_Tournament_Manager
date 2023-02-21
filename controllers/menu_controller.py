@@ -226,7 +226,7 @@ class TournamentMenu:
                 create_tournament = TournamentCreation()
                 create_tournament.create_new()
             elif selector == "2":
-                visu=TournamentVisualization()
+                visu = TournamentVisualization()
                 visu.display()
             elif selector == "3":
                 return_back = MainMenu()

@@ -69,7 +69,7 @@ class Play:
             for _index in range(len(self.ordered_players[:len(self.ordered_players)//2])):
                 self.pairs.append(
                     (_index, _index+len(self.ordered_players)//2))
-        except:
+        except ValueError:
             self.ordered_players = Manager.unserialize_player_dict(
                 self.tournament.players)
             self.ordered_players = sorted(
