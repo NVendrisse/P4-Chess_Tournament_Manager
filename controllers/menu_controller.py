@@ -264,7 +264,6 @@ class TournamentCreation:
         self.new_tournament.players = import_player_dict
         serialized_tournament = Manager.serialize_tournament(
             self.new_tournament)
-        print(serialized_tournament)
         Save.export_(serialized_tournament, "tournament",
                      "./save/tournament/{}".format(n))
         input()

@@ -72,4 +72,5 @@ class TournamentDisplay:
         cprint("Lieux : {}".format(data.location))
         for i in data.turn:
             cprint(i[0])
-            cprint(tabulate(i[1], tablefmt="fancy_grid"))
+            for j in i[1]:
+                cprint(tabulate(j, tablefmt="fancy_grid"))

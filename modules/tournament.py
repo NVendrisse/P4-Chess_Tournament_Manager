@@ -52,8 +52,9 @@ class Match:
         return self.player_one.score, self.player_two.score
 
     def export_score(self):
-        score = ([self.player_one.serialize(), self.player_two.serialize()], [
-                 self.player_one.score, self.player_two.score])
+        score = (["{} {}".format(self.player_one.serialize()["firstname"], self.player_one.serialize()["lastname"]),
+                 "{} {}".format(self.player_two.serialize()["firstname"], self.player_two.serialize()["lastname"])],
+                 [self.player_one.score, self.player_two.score])
         return score
 
 
