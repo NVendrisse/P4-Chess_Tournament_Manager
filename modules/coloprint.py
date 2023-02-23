@@ -1,7 +1,7 @@
 '''
 coloprint.py
 created by NicolasV
-version : 1.0
+version : 1.0 
 
 Usage:
 

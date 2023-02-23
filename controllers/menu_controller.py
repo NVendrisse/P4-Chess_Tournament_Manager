@@ -12,6 +12,7 @@ import os
 
 
 class SplashScreenLoader:
+    # Fonction d'appel du splash screen
     def display():
         Manager.clear_screen()
         file = open("./views/chess_piece.txt")
@@ -21,13 +22,16 @@ class SplashScreenLoader:
 
 
 class MainMenu:
+    # Classe de gestion du menu principal
     def __init__(self) -> None:
+        # Initialisation et vérification des répertoires
         Manager.clear_screen()
         self.is_players_list = bool(len(os.listdir("./save/players_list")))
         self.is_tournament_list = bool(len(os.listdir("./save/tournament")))
         Menus.main_menu(self.is_tournament_list, self.is_players_list)
 
     def select(self, selector: int):
+        # Fonction de sélection des items du menu
         while True:
             '''try:'''
             if selector == "1" and self.is_tournament_list:
@@ -57,11 +61,13 @@ class MainMenu:
 
 
 class PlayersMenu:
+    # Classe de gestion du menu des Joueurs
     def __init__(self) -> None:
         Manager.clear_screen()
         Menus.players_menu()
 
     def select(self, selector: int):
+        # Fonction de sélection des items du menu
         while True:
             try:
                 if selector == "1":
@@ -102,6 +108,7 @@ class PlayersMenu:
 
 
 class PlayerCreation:
+    # Classe de gestion de la création des liste de joueurs
     def __init__(self, players_list=[], listname="") -> None:
         Manager.clear_screen()
         self.players_list = players_list
@@ -109,7 +116,7 @@ class PlayerCreation:
         PlayersCreationInteract.player_creation()
 
     def create_new(self):
-
+        # Fonction de création d'une liste de joueurs
         Manager.clear_screen()
         fname = input("Prénom : ")
         lname = input("Nom : ")
@@ -123,8 +130,8 @@ class PlayerCreation:
         new_player = Player(fname, lname, bdate, genre, rank)
         self.players_list.append(new_player)
         if len(self.players_list) < 8:
-            print(PlayersCreationInteract.ask_new().format(
-                len(self.players_list)))
+            PlayersCreationInteract.ask_new().format(
+                len(self.players_list))
             answer = input("Y/n : ")
             if answer == "Y" or answer == "y":
                 self.create_new()
@@ -151,6 +158,7 @@ class PlayerCreation:
 
 
 class AddingPlayer:
+    # Fonction permettant l'ajout de joueurs a une liste déja existante
     def __init__(self, players_list, players_list_name: str) -> None:
         self.players_list = players_list
         self.players_list_name = players_list_name
@@ -161,11 +169,13 @@ class AddingPlayer:
 
 
 class PlayersVisualization:
+    # Classe de gestion de la visualisation des joueurs
     def __init__(self, players: list) -> None:
         Manager.clear_screen()
         self.players = players
 
     def select(self):
+        # Fonction de sélection des items du menu
         PlayersDisplay.menu()
         ans_menu = input("Sélection : ")
         while True:
@@ -186,6 +196,7 @@ class PlayersVisualization:
                 break
 
     def ordered_by_name(self):
+        # Fonction de classement des joueurs par ordre alphabétique
         Manager.clear_screen()
         players_list = Manager.unserialize_player_dict(self.players)
         ordered_list = sorted(
@@ -200,6 +211,7 @@ class PlayersVisualization:
         back_to_menu.select(input("Enter your choice :"))
 
     def ordered_by_rank(self):
+        # Fonction de classement par ordre de rang 
         Manager.clear_screen()
         players_list = Manager.unserialize_player_dict(self.players)
         ordered_list = sorted(
@@ -215,11 +227,13 @@ class PlayersVisualization:
 
 
 class TournamentMenu:
+    # Classe de gestion du menu des tournois
     def __init__(self) -> None:
         Manager.clear_screen()
         Menus.tournament_menu()
 
     def select(self, selector: int):
+        # Fonction de sélection des items du menu
         while True:
             '''try:'''
             if selector == "1":
@@ -228,6 +242,9 @@ class TournamentMenu:
             elif selector == "2":
                 visu = TournamentVisualization()
                 visu.display()
+                input("Press enter to continue")
+                back = TournamentMenu()
+                back.select(input("Enter your choice : "))
             elif selector == "3":
                 return_back = MainMenu()
                 return_back.select(
@@ -241,21 +258,30 @@ class TournamentMenu:
 
 
 class TournamentCreation:
+    # Classe de gestion de la création d'un tournois
     def __init__(self) -> None:
         Manager.clear_screen()
         TournamentCreationInteractive.tournament_creation()
 
     def create_new(self):
+        # Fonction de création d'un tournois
         n = input("Nom : ")
         loc = input("Localisation : ")
-        dd = input("Date de début : ")
-        df = input("Date de fin : ")
-        tc = input("Controle de temps : ")
+        dd = ""
+        df = ""
+        tc = ""
         rm = input("Nombre de tours (4 par défaut) : ")
         d = input("Description : ")
-        # Controle des inputs
+        while not re.match(r'[0-3][0-9]/[0-1][0-9]/[0-9][0-9][0-9][0-9]', dd):
+            dd = input("Date de début (jj/mm/aaaa) : ")
+        while not re.match(r'[0-3][0-9]/[0-1][0-9]/[0-9][0-9][0-9][0-9]', df):
+            df = input("Date de fin (jj/mm/aaaa) : ")
+        while not re.match(r'[123]', tc):
+            tc = input("Controle de temps (1 : Bullet, 2 : Blitz, 3 : Coup rapide): ")
+        if rm == "":
+            rm="4"
         self.new_tournament = Tournament(n, loc, dd, df, tc, d, [], rm, [])
-        print(TournamentCreationInteractive.tournament_add_player_menu().format(n))
+        TournamentCreationInteractive.tournament_add_player_menu().format(n)
         existing_list = os.listdir("./save/players_list")
         MainPlay.list_display(existing_list)
         select_list = input("Sélection d'une liste de joueur :")
@@ -273,9 +299,9 @@ class TournamentCreation:
 
 
 class TournamentVisualization:
-
+    # Classe de visualisation d'un tournois
     def __init__(self) -> None:
-        tournament_available = Save.select_tournament()
+        tournament_available = Save.select_tournament_visu()
         MainPlay.list_display(tournament_available)
         selected_tournament = input("Sélection du tournois : ")
         tournament_name = tournament_available[int(selected_tournament)-1]
@@ -284,5 +310,6 @@ class TournamentVisualization:
         self.t = Manager.unserialize_tournament(tournament_serialized)
 
     def display(self):
+        # Fonction d'affichage
         Manager.clear_screen()
         TournamentDisplay.display(self.t)

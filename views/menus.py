@@ -67,10 +67,11 @@ class PlayersDisplay:
 class TournamentDisplay:
     def display(data: Tournament):
         cprint(data.name)
-        cprint("Début : {} ({})| Fin : {} ({})".format(
+        cprint("Début : {} (Démarré le à: {})| Fin : {} (Fini le à: {})".format(
             data.start_date, data.start, data.end_date, data.stop))
         cprint("Lieux : {}".format(data.location))
-        for i in data.turn:
-            cprint(i[0])
-            for j in i[1]:
-                cprint(tabulate(j, tablefmt="fancy_grid"))
+        cprint("Classement final")
+        columns = {1:"firstname", 2:"lastname",
+                      3:"birthdate", 4:"genre", 5:"rank", 6:"score"}
+        cprint(tabulate(data.results, headers=columns, tablefmt="fancy_grid"))
+        cprint(data.description)

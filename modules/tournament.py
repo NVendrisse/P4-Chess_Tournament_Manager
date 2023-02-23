@@ -3,8 +3,9 @@ from views.play_view import MainPlay
 
 
 class Tournament:
-    def __init__(self, name: str, location: str, start_date: str, end_date: str, time_control: str,
-                 description: str, turn=[], round_amount=4, players=[], results=[]):
+    # Classe représentant un objet tournois
+    def __init__(self, name: str, location: str, start_date: str,end_date: str, time_control: str,
+                 description: str, turn=[], round_amount=4, players=[], results=[], start = "", stop = ""):
         self.name = name
         self.location = location
         self.start_date = start_date
@@ -16,8 +17,8 @@ class Tournament:
         self.players = players
         self.results = results
         self.current_turn = 1
-        self.start = ""
-        self.stop = ""
+        self.start = start
+        self.stop = stop
 
     def store_results(self, updated_results: list = []):
         self.results = updated_results
@@ -30,12 +31,13 @@ class Tournament:
 
 
 class Match:
-
+    # Classe représentant un objet match
     def __init__(self, players: tuple) -> None:
         self.player_one = players[0]
         self.player_two = players[1]
 
     def define_score(self):
+        # Fonction de définition du score d'un match
         print(MainPlay.scoring_display().format(
             self.player_one.lastname, self.player_two.lastname))
 
@@ -52,6 +54,7 @@ class Match:
         return self.player_one.score, self.player_two.score
 
     def export_score(self):
+        # Fonction d'export du score d'un match
         score = (["{} {}".format(self.player_one.serialize()["firstname"], self.player_one.serialize()["lastname"]),
                  "{} {}".format(self.player_two.serialize()["firstname"], self.player_two.serialize()["lastname"])],
                  [self.player_one.score, self.player_two.score])
@@ -59,7 +62,7 @@ class Match:
 
 
 class Turn:
-
+    # Classe représentant un objet tour
     def __init__(self, tournament: Tournament, match: list, current_turn: int) -> None:
         self.t = tournament
         self.m = match

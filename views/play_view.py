@@ -3,26 +3,17 @@ from tabulate import tabulate
 
 
 class MainPlay:
-    '''
-    Mainplay class is a view class for every display during a play of a tournament
 
-    function information
-    list_display : display a list used in the display of players list and tournament list
-
-    main_title : display the name of the tournament.
-
-
-    '''
     def list_display(list_to_display: list):
         selectors = [i + 1 for i in range(len(list_to_display))]
         for t in range(len(list_to_display)):
             cprint("{} : {}".format(selectors[t], list_to_display[t]))
 
-    def main_title():
-        return "Début du tournois : {}"
+    def main_title(data):
+        return print("Début du tournois : {}".format(data))
 
-    def round_display():
-        return "Round {}"
+    def round_display(nb):
+        return print("Round {}".format(nb))
 
     def play_menu():
         cprint("1- Entrer les scores des matchs")
@@ -36,3 +27,6 @@ class MainPlay:
         cols_names = ["Firstname", "Lastname", "Score"]
         cprint(tabulate(data, headers=cols_names, tablefmt="fancy_grid"),
                "bright_red", "black", "bold")
+        
+    def error_no_tournament_available():
+        return print("Tous les tournois sont terminés, veuillez en créer un nouveau")
