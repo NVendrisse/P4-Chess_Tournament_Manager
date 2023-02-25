@@ -67,7 +67,7 @@ class Play:
             self.tournament.players = Manager.serialize_player_list(
                 self.ordered_players)
         self.tournament.results = Manager.serialize_player_list(sorted(Manager.unserialize_player_dict(
-                self.tournament.players), key=lambda player: player.score, reverse=True))
+            self.tournament.players), key=lambda player: player.score, reverse=True))
         self.tournament.tournament_stop()
         export_tournament = Manager.serialize_tournament(self.tournament)
         Save.export_(export_tournament, "tournament",
@@ -96,7 +96,7 @@ class Play:
                     (_index, _index+len(self.ordered_players)//2))
 
     def play_turn(self, round: Turn):
-        # Fonction permettant le jeu d'un tour 
+        # Fonction permettant le jeu d'un tour
         Manager.clear_screen()
         round.turn_start()
         if round.ct == 1:
@@ -122,6 +122,14 @@ class Play:
         round.ct = self.tournament.current_turn
         TurnSave.save(self.tournament, round)
         self.saver()
+        MainPlay.continue_ask()
+        ans = input("Y/n (defaut Y): ")
+        if ans.capitalize() == "N":
+            return_back = controllers.menu_controller.MainMenu()
+            return_back.select(
+                input("Enter your choice : "))
+        else:
+            pass
 
     def saver(self):
         # Fonction de sauvegarde

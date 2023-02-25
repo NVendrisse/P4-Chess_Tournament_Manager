@@ -27,6 +27,9 @@ class MainPlay:
         cols_names = ["Firstname", "Lastname", "Score"]
         cprint(tabulate(data, headers=cols_names, tablefmt="fancy_grid"),
                "bright_red", "black", "bold")
-        
+
     def error_no_tournament_available():
         return print("Tous les tournois sont terminés, veuillez en créer un nouveau")
+
+    def continue_ask():
+        return print("Voulez-vous passer au round suivant ?")

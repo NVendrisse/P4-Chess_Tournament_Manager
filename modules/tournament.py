@@ -4,8 +4,8 @@ from views.play_view import MainPlay
 
 class Tournament:
     # Classe représentant un objet tournois
-    def __init__(self, name: str, location: str, start_date: str,end_date: str, time_control: str,
-                 description: str, turn=[], round_amount=4, players=[], results=[], start = "", stop = ""):
+    def __init__(self, name: str, location: str, start_date: str, end_date: str, time_control: str,
+                 description: str, turn=[], round_amount=4, players=[], results=[], start="", stop="", _ct=1):
         self.name = name
         self.location = location
         self.start_date = start_date
@@ -16,7 +16,7 @@ class Tournament:
         self.round_amount = round_amount
         self.players = players
         self.results = results
-        self.current_turn = 1
+        self.current_turn = _ct
         self.start = start
         self.stop = stop
 

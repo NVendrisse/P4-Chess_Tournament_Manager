@@ -70,8 +70,19 @@ class TournamentDisplay:
         cprint("Début : {} (Démarré le à: {})| Fin : {} (Fini le à: {})".format(
             data.start_date, data.start, data.end_date, data.stop))
         cprint("Lieux : {}".format(data.location))
+        cprint("Les matchs :")
+        match_column = ["Joueur", "Score"]
+        for t in data.turn:
+            print("Round {}".format(t[2]-1))
+            for m in t[1]:
+                j_u = m[0][0]
+                j_d = m[0][1]
+                sc_ju = str(m[1][0])
+                sc_jd = str(m[1][1])
+                mtc = [[j_u, sc_ju], [j_d, sc_jd]]
+                print(tabulate(mtc, headers=match_column, tablefmt="fancy_grid"))
         cprint("Classement final")
-        columns = {1:"firstname", 2:"lastname",
-                      3:"birthdate", 4:"genre", 5:"rank", 6:"score"}
+        columns = {1: "firstname", 2: "lastname",
+                      3: "birthdate", 4: "genre", 5: "rank", 6: "score"}
         cprint(tabulate(data.results, headers=columns, tablefmt="fancy_grid"))
         cprint(data.description)

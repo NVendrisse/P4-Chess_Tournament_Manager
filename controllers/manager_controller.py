@@ -39,15 +39,17 @@ class Manager:
                        "players": tournament.players,
                        "results": tournament.results,
                        "start": tournament.start,
-                       "stop": tournament.stop}
+                       "stop": tournament.stop,
+                       "current_turn": tournament.current_turn}
         serialized_tournament.append(return_dict)
         return serialized_tournament
 
     def unserialize_tournament(serialised_tournament: list):
         # Fonction de désérialisation de tournois
         # Retourne un objet Tournament
-        n, l, sd, ed, t, tc, d, ra, p, r, sta, stp = serialised_tournament[0].values()
-        unserialized_tournament = Tournament(n, l, sd, ed, tc, d, t, ra, p, r, sta, stp)
+        n, l, sd, ed, t, tc, d, ra, p, r, sta, stp, ct = serialised_tournament[0].values()
+        unserialized_tournament = Tournament(
+            n, l, sd, ed, tc, d, t, ra, p, r, sta, stp, ct)
         return unserialized_tournament
 
     def clear_screen():
